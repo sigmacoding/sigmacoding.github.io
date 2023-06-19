@@ -1,28 +1,76 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Query Page</title>
-</head>
 <body>
-    <h1>Query Page</h1>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
 
-    <script>
-        // Get the query parameters from the URL
-        const urlParams = new URLSearchParams(window.location.search);
+<script>
+function encryptString(data, key) {
+  // Convert the key to a WordArray object
+  var keyWordArray = CryptoJS.enc.Utf8.parse(key);
 
-        // Retrieve the value of the "name" parameter
-        const name = urlParams.get('name');
+  // Encrypt the data using AES
+  var encryptedData = CryptoJS.AES.encrypt(data, keyWordArray, {
+    mode: CryptoJS.mode.ECB, // Electronic Codebook mode
+    padding: CryptoJS.pad.Pkcs7, // PKCS7 padding
+  });
 
-        // Remove the query parameter from the URL without reloading the page
-        if (name) {
-            const stateObj = { name: name };
-            const pageTitle = document.title;
-            const newUrl = window.location.href.split('?')[0];
-            window.history.pushState(stateObj, pageTitle, newUrl);
-        }
+  // Convert the encrypted data to a base64-encoded string
+  var encryptedString = encryptedData.toString();
 
-        // Use the value as desired (e.g., store it for later use)
-        console.log(name);
-    </script>
+  return encryptedString;
+}
+
+function decryptString(encryptedString, key) {
+  // Convert the key to a WordArray object
+  var keyWordArray = CryptoJS.enc.Utf8.parse(key);
+
+  // Convert the encrypted string to a CipherParams object
+  var cipherParams = CryptoJS.lib.CipherParams.create({
+    ciphertext: CryptoJS.enc.Base64.parse(encryptedString),
+  });
+
+  // Decrypt the ciphertext using AES
+  var decryptedData = CryptoJS.AES.decrypt(cipherParams, keyWordArray, {
+    mode: CryptoJS.mode.ECB,
+    padding: CryptoJS.pad.Pkcs7,
+  });
+
+  // Convert the decrypted data to a UTF-8 string
+  var decryptedString = decryptedData.toString(CryptoJS.enc.Utf8);
+
+  return decryptedString;
+}
+
+
+
+var plaintext = "teraboxapp.com/strara";
+var key = "YOUR_UNIQUE_KEY"; // Replace with your unique key
+
+var encryptedString = encryptString(plaintext, key);
+console.log("Encrypted string:", encryptedString);
+
+var encryptedStringva = encryptedString;
+
+var decryptedString = decryptString(encryptedStringva, key);
+console.log("Decrypted string:", decryptedString);
+
+
+</script>
+
+
+<h2>My Heading</h2>
+
+<p>Play around with the code and click on the "Run" button to view the result.</p>
+
+<p id="demo"></p>
+
+
+<script>
+let x = 5;
+let y = 6;
+let z = x + y;
+document.getElementById("demo").innerHTML = "The vaslue of z is: " + z;
+</script>
+
 </body>
 </html>
