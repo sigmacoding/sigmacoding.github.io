@@ -13,12 +13,16 @@
         // Retrieve the value of the "name" parameter
         const name = urlParams.get('name');
 
-        // Use the value as desired (e.g., display it on the page)
+        // Remove the query parameter from the URL without reloading the page
         if (name) {
-            const greeting = document.createElement('p');
-            greeting.textContent = `Hello, ${name}!`;
-            document.body.appendChild(greeting);
+            const stateObj = { name: name };
+            const pageTitle = document.title;
+            const newUrl = window.location.href.split('?')[0];
+            window.history.pushState(stateObj, pageTitle, newUrl);
         }
+
+        // Use the value as desired (e.g., store it for later use)
+        console.log(name);
     </script>
 </body>
 </html>
