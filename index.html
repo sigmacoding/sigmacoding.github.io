@@ -1,60 +1,10 @@
 <!DOCTYPE html>
 <html>
 <body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+
 
 <script>
-function encryptString(data, key) {
-  // Convert the key to a WordArray object
-  var keyWordArray = CryptoJS.enc.Utf8.parse(key);
-
-  // Encrypt the data using AES
-  var encryptedData = CryptoJS.AES.encrypt(data, keyWordArray, {
-    mode: CryptoJS.mode.ECB, // Electronic Codebook mode
-    padding: CryptoJS.pad.Pkcs7, // PKCS7 padding
-  });
-
-  // Convert the encrypted data to a base64-encoded string
-  var encryptedString = encryptedData.toString();
-
-  return encryptedString;
-}
-
-function decryptString(encryptedString, key) {
-  // Convert the key to a WordArray object
-  var keyWordArray = CryptoJS.enc.Utf8.parse(key);
-
-  // Convert the encrypted string to a CipherParams object
-  var cipherParams = CryptoJS.lib.CipherParams.create({
-    ciphertext: CryptoJS.enc.Base64.parse(encryptedString),
-  });
-
-  // Decrypt the ciphertext using AES
-  var decryptedData = CryptoJS.AES.decrypt(cipherParams, keyWordArray, {
-    mode: CryptoJS.mode.ECB,
-    padding: CryptoJS.pad.Pkcs7,
-  });
-
-  // Convert the decrypted data to a UTF-8 string
-  var decryptedString = decryptedData.toString(CryptoJS.enc.Utf8);
-
-  return decryptedString;
-}
-
-
-
-var plaintext = "teraboxapp.com/strara";
-var key = "YOUR_UNIQUE_KEY"; // Replace with your unique key
-
-var encryptedString = encryptString(plaintext, key);
-console.log("Encrypted string:", encryptedString);
-
-var encryptedStringva = encryptedString;
-
-var decryptedString = decryptString(encryptedStringva, key);
-console.log("Decrypted string:", decryptedString);
-
-
+function encryptString(data_key) {
   file_name="./happy_json.json";
   fetch(file_name)
   .then(response => response.text())
@@ -62,11 +12,31 @@ console.log("Decrypted string:", decryptedString);
     const jsonData = JSON.parse(data);
     // Process the JSON data
     console.log(jsonData);
+    return jsonData[data_key];
   })
   .catch(error => {
     console.error('Error reading file:', error);
+    return "Please load again";
   });
+
+}
+
 </script>
+
+
+  <script>const urlParams = new URLSearchParams(window.location.search);
+
+        // Retrieve the value of the "name" parameter
+        const name = urlParams.get('name');
+
+        // Use the value as desired (e.g., display it on the page)
+        if (name!=null) {
+            const greeting = document.createElement('p');
+            greeting.textContent = `Hello, ${name}!`;
+            document.body.appendChild(greeting);
+            data=encryptString(name)
+          console.log(data);
+        }</script>
 
 
 <h2>My Heading</h2>
