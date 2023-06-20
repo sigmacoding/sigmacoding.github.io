@@ -33,7 +33,7 @@ function encryptString(data_key) {
             const greeting = document.createElement('p');
             greeting.textContent = `Hello, ${name}!`;
             document.body.appendChild(greeting);
-            data=encryptString(name)
+            data=encryptString(name.toString());
           console.log(data);
         }</script>
 
