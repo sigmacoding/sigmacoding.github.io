@@ -15,6 +15,7 @@ function encryptString(data_key) {
     return jsonData[data_key];
   })
   .catch(error => {
+    console.log("error, ${error}!");
     return "Please load again";
   });
 
